@@ -1,0 +1,38 @@
+{
+  "fit_split": "validation",
+  "source": "result\\runs\\lr_ablation\\lr_3e-3\\val_logits.npz",
+  "n": 2183,
+  "target_coverage": 0.8,
+  "temperature": 1.0810103944982714,
+  "entropy_threshold": 0.4177223525765095,
+  "val_coverage": 0.8002748511223088,
+  "accepted_fraction": 0.8002748511223088,
+  "accepted_error": {
+    "any_label": 0.31654264453348596,
+    "macro_label": 0.09753863766456781
+  },
+  "entropy_threshold_uncalibrated": 0.39711855822590786,
+  "val_coverage_uncalibrated": 0.8002748511223088,
+  "accepted_error_uncalibrated": {
+    "any_label": 0.31654264453348596,
+    "macro_label": 0.09742415569547795
+  },
+  "metrics_uncalibrated": {
+    "nll": 0.2975304920619141,
+    "brier": 0.09019927636820103,
+    "ece": 0.01079867733651035,
+    "label_accuracy": 0.8770499312872194,
+    "exact_match": 0.6023820430600092,
+    "any_label_error": 0.39761795693999086,
+    "macro_label_error": 0.12295006871278058
+  },
+  "metrics_calibrated": {
+    "nll": 0.2966908834693955,
+    "brier": 0.09014689473828344,
+    "ece": 0.005551905661944093,
+    "label_accuracy": 0.8770499312872194,
+    "exact_match": 0.6023820430600092,
+    "any_label_error": 0.39761795693999086,
+    "macro_label_error": 0.12295006871278058
+  }
+}

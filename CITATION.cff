@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the project report."
+title: "Calibration Is Not Enough: A Three-Level Audit of Selective Prediction for Multi-Label ECG Classification"
+abstract: >-
+  A reproducibility-focused audit of calibration, abstention scores and decision
+  granularity for multi-label ECG triage on PTB-XL. Temperature scaling improves
+  expected calibration error by 3.5x while leaving the risk-coverage curve
+  essentially unchanged; the score layer has a measurable budget of 6.9 points at
+  80% coverage, and decision granularity changes the achievable operating point
+  more than any post-hoc score does.
+authors:
+  - family-names: Jiang
+    given-names: Zhengyu
+    affiliation: "MSc AI in Medicine, Nanyang Technological University"
+    orcid: ""
+version: 1.0.0
+date-released: 2026-10-25
+license: MIT
+keywords:
+  - electrocardiography
+  - selective prediction
+  - calibration
+  - abstention
+  - risk-coverage
+  - PTB-XL
+references:
+  - type: dataset
+    title: "PTB-XL, a large publicly available electrocardiography dataset"
+    authors:
+      - family-names: Wagner
+        given-names: Patrick
+      - family-names: Strodthoff
+        given-names: Nils
+    doi: 10.1038/s41597-020-0495-6
+    year: 2020

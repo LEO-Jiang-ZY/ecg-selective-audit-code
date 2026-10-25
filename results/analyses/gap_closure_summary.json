@@ -1,0 +1,13 @@
+{
+  "coverage": 0.8,
+  "r_oracle": 0.2360637087599545,
+  "r_current_maxprob": 0.3014789533560865,
+  "budget_pp": 6.541524459613199,
+  "best_feature_aware": "learned head, record-level",
+  "best_recovered": 0.060869565217391626,
+  "best_recovered_ci": [
+    -0.08776452481723791,
+    0.171308521495089
+  ],
+  "posthoc_best_recovered": 0.02608695652173951
+}

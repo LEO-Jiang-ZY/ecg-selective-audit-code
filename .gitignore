@@ -1,0 +1,19 @@
+# data — PTB-XL waveforms are not redistributed
+data/*
+!data/README.md
+!data/splits/
+
+# regenerable artefacts
+*.npz
+*.npy
+data/cache*
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

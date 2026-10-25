@@ -1,0 +1,38 @@
+{
+  "fit_split": "validation",
+  "source": "D:\\iAIM\\result\\runs\\seed_43\\val_logits.npz",
+  "n": 2183,
+  "target_coverage": 0.8,
+  "temperature": 1.2446403942564108,
+  "entropy_threshold": 0.4072681846144371,
+  "val_coverage": 0.8002748511223088,
+  "accepted_fraction": 0.8002748511223088,
+  "accepted_error": {
+    "any_label": 0.31253577561534057,
+    "macro_label": 0.09708070978820837
+  },
+  "entropy_threshold_uncalibrated": 0.3511302118936935,
+  "val_coverage_uncalibrated": 0.8002748511223088,
+  "accepted_error_uncalibrated": {
+    "any_label": 0.3113909559244419,
+    "macro_label": 0.09650829994275902
+  },
+  "metrics_uncalibrated": {
+    "nll": 0.2974293894474877,
+    "brier": 0.08981372456643182,
+    "ece": 0.02654940704105537,
+    "label_accuracy": 0.8800732936326157,
+    "exact_match": 0.608337150710032,
+    "any_label_error": 0.3916628492899679,
+    "macro_label_error": 0.11992670636738434
+  },
+  "metrics_calibrated": {
+    "nll": 0.29051229813602336,
+    "brier": 0.08883241336100903,
+    "ece": 0.007096506531209399,
+    "label_accuracy": 0.8800732936326157,
+    "exact_match": 0.608337150710032,
+    "any_label_error": 0.3916628492899679,
+    "macro_label_error": 0.11992670636738434
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "seed": 42,
+  "epochs": 20,
+  "device": "cuda",
+  "n_train": 17418,
+  "n_validation": 2183,
+  "checkpoint": "result\\runs\\lr_ablation\\lr_3e-3\\best.pt",
+  "best_epoch": 10,
+  "best_validation_loss": 0.29753049541873994,
+  "validation_logits": {
+    "path": "result\\runs\\lr_ablation\\lr_3e-3\\val_logits.npz",
+    "n": 2183,
+    "num_classes": 5
+  },
+  "cache": "result/cache/ptbxl_100hz.npy",
+  "config": {
+    "data": {
+      "root": "data/PTB-XL_ECG_dataset_1.0.3/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3",
+      "metadata": "ptbxl_database.csv",
+      "scp_statements": "scp_statements.csv",
+      "sampling_rate": 100,
+      "target_length": 1000,
+      "folds": {
+        "train": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "validation": [
+          9
+        ],
+        "test": [
+          10
+        ]
+      },
+      "classes": [
+        "NORM",
+        "MI",
+        "STTC",
+        "CD",
+        "HYP"
+      ],
+      "batch_size": 64,
+      "num_workers": 0,
+      "cache": "result/cache/ptbxl_100hz.npy",
+      "cache_index": "result/cache/index.csv"
+    },
+    "labeling": {
+      "min_scp_probability": null,
+      "drop_all_zero": false
+    },
+    "model": {
+      "in_channels": 12,
+      "base_channels": 32,
+      "blocks": [
+        1,
+        1,
+        1
+      ],
+      "dropout": 0.1
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 20,
+      "learning_rate": 0.003,
+      "weight_decay": 0.0001,
+      "checkpoint": "result\\runs\\lr_ablation\\lr_3e-3\\best.pt",
+      "save_validation_logits": true,
+      "validation_logits": "result\\runs\\lr_ablation\\lr_3e-3\\val_logits.npz"
+    },
+    "calibration": {
+      "max_iter": 100,
+      "target_coverage": 0.8,
+      "abstention_entropy": null,
+      "output": "result\\runs\\lr_ablation\\lr_3e-3\\calibration.json"
+    },
+    "evaluation": {
+      "primary_error_unit": "any_label",
+      "secondary_error_units": [
+        "macro_label"
+      ],
+      "probability_threshold": 0.5,
+      "output": "result\\runs\\lr_ablation\\lr_3e-3\\evaluation.json"
+    },
+    "subgroups": {
+      "columns": [
+        "age_group",
+        "sex_label",
+        "quality_any",
+        "device_group",
+        "site_group"
+      ]
+    },
+    "shift": {
+      "columns": [
+        "device_group",
+        "site_group"
+      ]
+    },
+    "bootstrap": {
+      "n_resamples": 1000,
+      "seed": 42,
+      "confidence": 0.95,
+      "unit": "patient"
+    }
+  }
+}

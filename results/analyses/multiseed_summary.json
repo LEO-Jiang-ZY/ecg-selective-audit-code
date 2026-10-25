@@ -1,0 +1,44 @@
+[
+  {
+    "seed": 42,
+    "temperature": 1.1868,
+    "best_epoch": 14,
+    "coverage": 0.7962,
+    "baseline_error": 0.3096,
+    "accepted_error": 0.3114,
+    "delta_pp": 0.18,
+    "auroc": 0.9076,
+    "auprc": 0.7701,
+    "exact": 0.611,
+    "ece": 0.0068,
+    "nll": 0.2947
+  },
+  {
+    "seed": 43,
+    "temperature": 1.2446,
+    "best_epoch": 15,
+    "coverage": 0.783,
+    "baseline_error": 0.2944,
+    "accepted_error": 0.2981,
+    "delta_pp": 0.37,
+    "auroc": 0.9082,
+    "auprc": 0.7638,
+    "exact": 0.6092,
+    "ece": 0.0073,
+    "nll": 0.2929
+  },
+  {
+    "seed": 44,
+    "temperature": 1.1693,
+    "best_epoch": 12,
+    "coverage": 0.8066,
+    "baseline_error": 0.3135,
+    "accepted_error": 0.3181,
+    "delta_pp": 0.46,
+    "auroc": 0.9083,
+    "auprc": 0.7669,
+    "exact": 0.6046,
+    "ece": 0.006,
+    "nll": 0.2949
+  }
+]

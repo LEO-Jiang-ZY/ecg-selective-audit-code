@@ -1,0 +1,112 @@
+{
+  "temperature": 1.1867533875063325,
+  "n_calibration": 2183,
+  "n_test": 2198,
+  "record_level": [
+    {
+      "alpha": 0.1,
+      "lambda": 0.9450021420377123,
+      "coverage": 0.26205641492265697,
+      "accepted_error": 0.0920138888888889,
+      "marginal_risk": 0.024112829845313925,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.15,
+      "lambda": 0.9061271079675535,
+      "coverage": 0.40764331210191085,
+      "accepted_error": 0.13727678571428573,
+      "marginal_risk": 0.055959963603275716,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.2,
+      "lambda": 0.8841703893573699,
+      "coverage": 0.4986351228389445,
+      "accepted_error": 0.18156934306569342,
+      "marginal_risk": 0.09053685168334849,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.25,
+      "lambda": 0.8545040328293274,
+      "coverage": 0.6096451319381255,
+      "accepted_error": 0.22835820895522388,
+      "marginal_risk": 0.1392174704276615,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.3,
+      "lambda": 0.8114521960893477,
+      "coverage": 0.7656960873521383,
+      "accepted_error": 0.2917409387997623,
+      "marginal_risk": 0.22338489535941766,
+      "guarantee_holds": true
+    }
+  ],
+  "label_level": [
+    {
+      "alpha": 0.1,
+      "label_coverage": 0.5886260236578708,
+      "label_error": 0.03369918070799196,
+      "full_record_issuance": 0.21929026387625114,
+      "deferred_labels_per_record": 2.056869881710646,
+      "marginal_risk": 0.09918107370336669,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.15,
+      "label_coverage": 0.6797998180163786,
+      "label_error": 0.04269843394458573,
+      "full_record_issuance": 0.30118289353958144,
+      "deferred_labels_per_record": 1.6010009099181075,
+      "marginal_risk": 0.1451319381255687,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.2,
+      "label_coverage": 0.7410373066424022,
+      "label_error": 0.05144891944990177,
+      "full_record_issuance": 0.3666969972702457,
+      "deferred_labels_per_record": 1.2948134667879891,
+      "marginal_risk": 0.19062784349408554,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.25,
+      "label_coverage": 0.7886260236578708,
+      "label_error": 0.06207453559478482,
+      "full_record_issuance": 0.43266606005459507,
+      "deferred_labels_per_record": 1.056869881710646,
+      "marginal_risk": 0.24476797088262056,
+      "guarantee_holds": true
+    },
+    {
+      "alpha": 0.3,
+      "label_coverage": 0.8267515923566879,
+      "label_error": 0.0713185119964781,
+      "full_record_issuance": 0.49363057324840764,
+      "deferred_labels_per_record": 0.8662420382165603,
+      "marginal_risk": 0.2948134667879891,
+      "guarantee_holds": true
+    }
+  ],
+  "shift_check": [
+    {
+      "group": "device=CS-12",
+      "n": 703,
+      "coverage": 0.45803698435277385,
+      "accepted_error": 0.2546583850931677,
+      "marginal_risk": 0.1166429587482219,
+      "guarantee_holds": true
+    },
+    {
+      "group": "device!=CS-12",
+      "n": 1495,
+      "coverage": 0.5177257525083612,
+      "accepted_error": 0.1511627906976744,
+      "marginal_risk": 0.07826086956521738,
+      "guarantee_holds": true
+    }
+  ]
+}
