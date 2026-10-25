@@ -12,6 +12,7 @@ from pathlib import Path
 from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
 
@@ -70,13 +71,40 @@ def setup_document(doc: Document) -> None:
 
 
 def add_table(doc: Document, rows: list[list[str]]) -> None:
+    """固定布局：按内容长度分配列宽，保证整表落在版心内并允许单元格内换行。"""
     if not rows:
         return
     n_cols = len(rows[0])
     table = doc.add_table(rows=len(rows), cols=n_cols)
     table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
-    table.autofit = True
+    table.autofit = False
+    table.allow_autofit = False
+
+    section = doc.sections[0]
+    usable = int(section.page_width - section.left_margin - section.right_margin)
+
+    weights = []
+    for c in range(n_cols):
+        longest = max(len(re.sub(r"[*`$]", "", row[c] if c < len(row) else "")) for row in rows)
+        weights.append(max(4.0, float(longest) ** 0.75))
+    total = sum(weights)
+    widths = [max(int(0.5 * usable / n_cols), int(usable * w / total)) for w in weights]
+    # 归一化到版心宽度，避免各列取整后总和溢出
+    scale = usable / sum(widths)
+    widths = [int(w * scale) for w in widths]
+    widths[-1] += usable - sum(widths)
+
+    layout = OxmlElement("w:tblLayout")
+    layout.set(qn("w:type"), "fixed")
+    table._tbl.tblPr.append(layout)
+
+    for i, width in enumerate(widths):
+        table.columns[i].width = width
+        for cell in table.columns[i].cells:
+            cell.width = width
+
+    font_size = 8 if n_cols >= 8 else 9
     for r, row in enumerate(rows):
         for c in range(n_cols):
             cell = table.cell(r, c)
@@ -84,7 +112,7 @@ def add_table(doc: Document, rows: list[list[str]]) -> None:
             paragraph = cell.paragraphs[0]
             paragraph.paragraph_format.space_after = Pt(2)
             text = row[c] if c < len(row) else ""
-            add_rich_text(paragraph, text, size=9, base_bold=(r == 0))
+            add_rich_text(paragraph, text, size=font_size, base_bold=(r == 0))
     doc.add_paragraph()
 
 

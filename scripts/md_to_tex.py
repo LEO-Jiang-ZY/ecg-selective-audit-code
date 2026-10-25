@@ -31,11 +31,8 @@ PREAMBLE = r"""\documentclass{article}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{multirow}
+\usepackage{tabularx}
 
-% Shrink a table only when it is wider than the text block.
-\newcommand{\fitwidth}[1]{%
-  \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}%
-}
 
 \title{%TITLE%}
 
@@ -151,6 +148,27 @@ def parse_table(lines: list[str]) -> tuple[str, list[str], list[str]]:
     return header, aligns, rows
 
 
+def _is_numeric_column(cells: list[list[str]], c: int) -> bool:
+    values = [re.sub(r"[*`$\s]", "", row[c] if c < len(row) else "") for row in cells[1:]]
+    values = [v for v in values if v]
+    if not values:
+        return False
+    numeric = sum(1 for v in values if re.fullmatch(r"[-+\u2212]?[\d.,]+%?|\u2014|\u2013|[<>]?\d+(?:\.\d+)?", v))
+    return numeric / len(values) >= 0.6
+
+
+def _tabularx_spec(cells: list[list[str]], maxlen: list[int]) -> str:
+    spec = []
+    for c, length in enumerate(maxlen):
+        if _is_numeric_column(cells, c):
+            spec.append("r")
+        elif length <= 12:
+            spec.append("l")
+        else:
+            spec.append(">{\\raggedright\\arraybackslash}X")
+    return "".join(spec)
+
+
 def convert(markdown: str) -> str:
     lines = markdown.split("\n")
     body: list[str] = []
@@ -204,6 +222,18 @@ def convert(markdown: str) -> str:
             index += 1
             continue
 
+        if re.match(r"^[-*]\s+", stripped):
+            items = []
+            while index < len(lines) and re.match(r"^[-*]\s+", lines[index].strip()):
+                items.append(re.sub(r"^[-*]\s+", "", lines[index].strip()))
+                index += 1
+            body.append("\\begin{itemize}")
+            body.append("\\setlength{\\itemsep}{2pt}")
+            for item in items:
+                body.append(f"  \\item {inline(item)}")
+            body.append("\\end{itemize}\n")
+            continue
+
         if stripped.startswith("!["):
             match = re.match(r"!\[[^\]]*\]\(([^)]+)\)", stripped)
             index += 1
@@ -239,25 +269,45 @@ def convert(markdown: str) -> str:
             else:
                 body.append("\\begin{center}")
             body.append("\\small")
-            wide = len(aligns) >= 6
-            if wide:
-                body.append("\\fitwidth{%")
-            body.append("\\begin{tabular}{" + "".join(aligns) + "}")
+            cells = [header] + rows
+            n_cols = len(aligns)
+            maxlen = [
+                max(len(re.sub(r"[*`$]", "", (row[c] if c < len(row) else ""))) for row in cells)
+                for c in range(n_cols)
+            ]
+
+            mode = "plain"
+            if n_cols >= 6:
+                mode = "resize"
+                body.append("\\resizebox{\\linewidth}{!}{%")
+                body.append("\\begin{tabular}{" + "".join(aligns) + "}")
+            else:
+                spec = _tabularx_spec(cells, maxlen)
+                if "X" in spec:
+                    mode = "x"
+                    body.append("\\begin{tabularx}{\\linewidth}{@{}" + spec + "@{}}")
+                else:
+                    body.append("\\begin{tabular}{" + "".join(aligns) + "}")
+
             body.append("\\toprule")
             body.append(" & ".join(inline(cell) for cell in header) + r" \\")
             body.append("\\midrule")
             for row in rows:
                 body.append(" & ".join(inline(cell) for cell in row) + r" \\")
             body.append("\\bottomrule")
-            body.append("\\end{tabular}")
-            if wide:
-                body.append("}")
+
+            if mode == "resize":
+                body.append("\\end{tabular}}")
+            elif mode == "x":
+                body.append("\\end{tabularx}")
+            else:
+                body.append("\\end{tabular}")
             body.append("\\end{table}\n" if caption else "\\end{center}\n")
             continue
 
         if stripped.startswith("**Table"):
-            inner = stripped.strip("*").strip()
-            pending_caption = re.sub(r"^Table\s*[0-9A-Z]+\.[\s]*", "", inner)
+            inner = stripped.replace("**", "").strip()
+            pending_caption = re.sub(r"^Table\s*[0-9A-Z]+\.[\s]*", "", inner).strip()
             index += 1
             continue
 
@@ -280,7 +330,9 @@ def convert(markdown: str) -> str:
                 items.append(lines[index].strip()[3:])
                 index += 1
             body.append("\\begin{enumerate}")
-            body.append("\\item " + " \\item ".join(inline(item) for item in items))
+            body.append("\\setlength{\\itemsep}{1pt}")
+            for item in items:
+                body.append("  \\item " + inline(item))
             body.append("\\end{enumerate}\n")
             continue
 
